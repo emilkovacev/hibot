@@ -1,6 +1,7 @@
 import discord
 from dotenv import load_dotenv
 import os
+import re
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
@@ -12,19 +13,14 @@ class MyClient(discord.Client):
 
     @classmethod
     async def on_message(self, message):
-        m = message.content.lower().split(' ')
-        me = message.content.lower()
-        if me.find('i love you hibot') != -1:
-            await message.channel.send(f'<3 {client.user}')
-        if (me.find('amogus') != -1 or me.find('among us') != -1) and message.author != client.user:
+        mi = message.content.lower().split(' ')
+        if message.author.bot and message.author != client.user:
+            await message.channel.send(f'<3 {message.author.nick} is kinda sus :eyes:')
+        elif ('amogus' in mi) and message.author != client.user:
             await message.channel.send(f'amogus II: **Upon Us**')
-        elif ('hi' in m or 'hello' in m or 'heya' in m) and message.author != client.user:
+        elif ('hi' in mi or 'hello' in mi or 'hey' in mi or 'shalom' in mi) and message.author != client.user:
             await message.channel.send(f'hi {message.author.nick}')
-        elif (me.find('good morning gamers') != -1) and message.author != client.user:
-            await message.channel.send(f'good morning gamer {message.author.nick}')
-        elif (me.find('good morning') != -1) and message.author != client.user:
-            await message.channel.send(f'good morning {message.author.nick}')
-        elif ('goodnight' in m or 'gn' in m) and message.author != client.user:
+        elif ('goodnight' in mi or 'gn' in mi) and message.author != client.user:
             await message.channel.send(f'goodnight {message.author.nick}')
 
 
